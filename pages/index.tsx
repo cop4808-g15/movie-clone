@@ -1,6 +1,6 @@
 import { initFirebase } from '@/firebase/firebaseApp'
 import styles from '@/styles/Home.module.css'
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -49,6 +49,7 @@ export default function Home() {
         <button type="button" onClick={callApi}>
           Get token
         </button>
+        <div className="flex mt-10">hello</div>
       </div>
     )
   }
