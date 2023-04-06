@@ -1,9 +1,10 @@
 import { initFirebase } from '@/firebase/firebaseApp'
 import styles from '@/styles/Home.module.css'
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import Movies from './movies'
 
 export default function Home() {
   // firebase configuration
@@ -41,14 +42,16 @@ export default function Home() {
 
   if (user) {
     return (
-      <div>
-        <p>Welcome {user.displayName}</p>
+      <div className="p-10 mb-20">
+        {/*  <p>Welcome {user.displayName}</p> */}
+        <div className="text-2xl">Movies</div>
         <button type="button" onClick={signOut}>
           Sign OUT
         </button>
         <button type="button" onClick={callApi}>
           Get token
         </button>
+        <Movies />
       </div>
     )
   }
