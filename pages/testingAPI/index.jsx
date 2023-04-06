@@ -28,8 +28,8 @@ function TestingAPI() {
         console.log(movies)
     }, [])
 
-    const showFeaturedMovies = async () => {
-        const response = await axios.get("/api/showFeaturedMovies");
+    const addMovieHandler = async () => {
+        const response = await axios.get("/api/addMovie");
         const { data } = response
         console.log(data)
     }
@@ -37,7 +37,7 @@ function TestingAPI() {
     return (
         <>
             <h1>HELLO WORLD!</h1>
-            <button type="button" onClick={showFeaturedMovies}>
+            <button type="button" onClick={addMovieHandler}>
                 test backed for featured movies
             </button>
         </>
