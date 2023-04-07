@@ -7,7 +7,7 @@ export default function Movies() {
   useEffect(() => {
     const getMovies = async () => {
       try {
-        const movieApiResponse = await axios.get('/api')
+        const movieApiResponse = await axios.get('/api/getMovies')
         const movieData = movieApiResponse.data
         setMovies(movieData)
       } catch (error) {
@@ -16,18 +16,16 @@ export default function Movies() {
     }
     getMovies()
   }, [])
-  console.log(movies)
 
   const addMovie = async (movie) => {
     try {
-      console.log('clicked...')
-      const response = await axios.post('/api', movie, {
+      const response = await axios.post('/api/addMovie', movie, {
         headers: {
           'Content-Type': 'application/json',
         },
       })
 
-      console.log(response)
+      console.log(response.data)
     } catch (error) {
       console.error(error)
     }

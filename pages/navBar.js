@@ -32,6 +32,8 @@ function Bars3Icon() {
   )
 }
 
+
+
 export default function NavBar() {
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-5">
