@@ -1,3 +1,11 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* :root {
+  background-image: linear-gradient(
+    to right,
+    rgb(63, 196, 196),
+    rgb(55, 55, 219)
+  );
+} */

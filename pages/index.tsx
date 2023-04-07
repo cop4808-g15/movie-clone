@@ -1,8 +1,7 @@
-import { initFirebase } from '@/firebase/firebaseApp';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import Movies from './movies';
-
+import { initFirebase } from '@/firebase/firebaseApp'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import Movies from './movies'
 
 export default function Home() {
   // firebase configuration
@@ -42,14 +41,24 @@ export default function Home() {
     return (
       <div className="p-10 mb-20">
         {/*  <p>Welcome {user.displayName}</p> */}
-        <div className="text-2xl">Movies</div>
-        <button type="button" onClick={signOut}>
-          Sign OUT
-        </button>
-        <button type="button" onClick={callApi}>
-          Get token
-        </button>
-        <Movies/>
+        <div className="grid justify-center py-6 text-center">
+          <div className="text-2xl">List of Popular Movies For the Day</div>
+          <button
+            className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            type="button"
+            onClick={signOut}
+          >
+            Sign OUT
+          </button>
+          {/* <button
+            className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            type="button"
+            onClick={callApi}
+          >
+            Get token
+          </button> */}
+        </div>
+        <Movies />
       </div>
     )
   }
@@ -57,7 +66,7 @@ export default function Home() {
   return (
     <div className="bg-white flex justify-center">
       <button
-        className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        className=" bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
         type="button"
         onClick={signIn}
       >
