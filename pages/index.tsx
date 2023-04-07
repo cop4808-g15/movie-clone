@@ -1,7 +1,8 @@
-import { initFirebase } from '@/firebase/firebaseApp'
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import Movies from './movies'
+import { initFirebase } from '@/firebase/firebaseApp';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import Movies from './movies';
+
 
 export default function Home() {
   // firebase configuration
@@ -48,7 +49,7 @@ export default function Home() {
         <button type="button" onClick={callApi}>
           Get token
         </button>
-        <Movies />
+        <Movies/>
       </div>
     )
   }
