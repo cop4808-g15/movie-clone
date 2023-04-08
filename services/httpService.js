@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 /**
  * This file is used to configure the default settings for axios.
@@ -12,8 +13,8 @@ axios.interceptors.response.use(null, (error) => {
     error.response.status >= 400 &&
     error.response.status < 500
 
-  if (!expectedError) {
-    alert('An unexpected error occurred.')
+  if (expectedError) {
+    toast.error('An unexpected error occurred.')
   }
 
   return Promise.reject(error)
