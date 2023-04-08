@@ -2,7 +2,8 @@ import Link from 'next/link'
 
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
+
 
 const navigation = [
   { name: 'Movies', href: '/', current: true },
@@ -32,9 +33,10 @@ function Bars3Icon() {
   )
 }
 
+export default function NavBar({onButtonClick}){
 
+  const [nav, setNav] = useState(navigation)
 
-export default function NavBar() {
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-5">
       {({ open }) => (
@@ -66,8 +68,12 @@ export default function NavBar() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <Link
+                    {nav.map((item) => (
+                      <Link onClick={() => {
+                        const newNav = onButtonClick(nav, item.name)
+                        setNav(newNav)
+                      }
+                    }
                         key={item.name}
                         href={item.href}
                         className={classNames(
