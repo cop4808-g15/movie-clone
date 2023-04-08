@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import * as api from '../services/apiService'
 
 interface Movie {
   id: string
@@ -12,16 +13,17 @@ interface Movie {
 function Movies(): JSX.Element {
   const [movies, setMovies] = useState<Movie[]>([])
 
-  useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const movieApiResponse = await axios.get<Movie[]>('/api/getMovies')
-        const movieData = movieApiResponse.data
-        setMovies(movieData)
-      } catch (error) {
-        console.error(error)
-      }
+  const getMovies = async () => {
+    try {
+      const { data } = await api.getMovies()
+
+      setMovies(data)
+    } catch (error) {
+      console.error(error)
     }
+  }
+
+  useEffect(() => {
     getMovies()
   }, [])
 
