@@ -1,18 +1,18 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 interface Movie {
-  id: string;
-  title: string;
-  image: string;
-  release_date: string;
-  popularity: string;
+  id: string
+  title: string
+  image: string
+  release_date: string
+  popularity: string
 }
 
-function Movies(): JSX.Element{
+function Movies(): JSX.Element {
   const [movies, setMovies] = useState<Movie[]>([])
 
-  useEffect(() => { 
+  useEffect(() => {
     const getMovies = async () => {
       try {
         const movieApiResponse = await axios.get<Movie[]>('/api/getMovies')
@@ -68,7 +68,7 @@ function Movies(): JSX.Element{
             </p>
           </li>
           <button
-            className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full content-center"
+            className="bg-[rgb(31,41,55)] hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full content-center"
             type="button"
             onClick={() => addMovie(movie)}
           >
@@ -79,5 +79,4 @@ function Movies(): JSX.Element{
     </ul>
   )
 }
-export default Movies;
-
+export default Movies
