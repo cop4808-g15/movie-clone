@@ -1,6 +1,7 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import * as api from '../services/apiService'
+import axios from 'axios';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import * as api from '../services/apiService';
 
 interface Movie {
   id: string
@@ -34,12 +35,13 @@ function Movies(): JSX.Element {
           'Content-Type': 'application/json',
         },
       })
-
       console.log(response.data)
+
     } catch (error) {
       console.error(error)
     }
   }
+
 
   return (
     <ul className="px-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-7 xl:gap-x-8">
@@ -51,13 +53,15 @@ function Movies(): JSX.Element {
                 src={movie.image}
                 alt=""
                 className="pointer-events-none object-cover group-hover:opacity-75"
-              />
+                />
+            <Link href={`/${movie.id}`}>
               <button
                 type="button"
                 className="absolute inset-0 focus:outline-none"
-              >
+                >
                 <span className="sr-only">View details for {movie.title}</span>
               </button>
+            </Link>
             </div>
             <p className="text-center pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
               {movie.title}
