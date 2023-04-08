@@ -1,13 +1,21 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-export default function Movies() {
-  const [movies, setMovies] = useState([])
+interface Movie {
+  id: string;
+  title: string;
+  image: string;
+  release_date: string;
+  popularity: string;
+}
 
-  useEffect(() => {
+function Movies(): JSX.Element{
+  const [movies, setMovies] = useState<Movie[]>([])
+
+  useEffect(() => { 
     const getMovies = async () => {
       try {
-        const movieApiResponse = await axios.get('/api/getMovies')
+        const movieApiResponse = await axios.get<Movie[]>('/api/getMovies')
         const movieData = movieApiResponse.data
         setMovies(movieData)
       } catch (error) {
@@ -17,7 +25,7 @@ export default function Movies() {
     getMovies()
   }, [])
 
-  const addMovie = async (movie) => {
+  const addMovie = async (movie: Movie) => {
     try {
       const response = await axios.post('/api/addMovie', movie, {
         headers: {
@@ -71,3 +79,5 @@ export default function Movies() {
     </ul>
   )
 }
+export default Movies;
+
