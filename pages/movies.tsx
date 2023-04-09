@@ -4,6 +4,7 @@ import { getAuth } from 'firebase/auth'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { toast } from 'react-toastify'
 import * as api from '../services/apiService'
 
 interface Movie {
@@ -43,25 +44,34 @@ function Movies(): JSX.Element {
     httpService.put(`/api/user/${user.uid}`, payload)
 
   const addMovie = async (movie) => {
-    const { data } = await fetchUser()
+    try {
+      const { data } = await fetchUser()
 
-    const userFavorites = data.user.favorites ? data.user.favorites : {}
+      const userFavorites = data.user.favorites ? data.user.favorites : {}
 
-    // if movie is already in favorites
-    if (userFavorites[movie.id]) {
-      return
+      // if movie is already in favorites
+      if (userFavorites[movie.id]) {
+        return
+      }
+
+      // add new movie into favorites
+      const favorites = {
+        ...userFavorites,
+        [movie.id]: movie,
+      }
+
+      // construct request payload
+      const payload = { favorites }
+
+      // update user
+      await updateUser(payload)
+
+      // display success messsage
+      toast.success('Movie successfully added to favorites')
+    } catch (e) {
+      // display error message
+      toast.error(e.message)
     }
-
-    const favorites = {
-      ...userFavorites,
-      [movie.id]: movie,
-    }
-
-    const payload = { favorites }
-
-    const res = await updateUser(payload)
-
-    console.log(res)
   }
 
   // if user state is loading
