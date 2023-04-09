@@ -25,6 +25,7 @@
     "heroicons": "^2.0.17",
     "mongodb": "^5.2.0",
     "next": "13.2.4",
+    "next-connect": "^0.13.0",
     "postcss": "^8.4.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
