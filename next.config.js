@@ -5,4 +5,7 @@ module.exports = {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_PRIVATE_KEY: process.env.FIREBASE_PRIVATE_KEY,
   },
+  images: {
+    domains: ['image.tmdb.org'],
+  },
 }

@@ -32,16 +32,18 @@ export default function Home() {
   // sign out with firebase
   const signOut = async () => auth.signOut()
 
-  // // verify JWT token via backend
-  // const callApi = async () => {
-  //   const token = await user.getIdToken()
+  // verify JWT token via backend
+  const callApi = async () => {
+    const token = await user.getIdToken()
 
-  //   const data = await fetch('/api/firebase', {
-  //     headers: { Authorization: token },
-  //   }).then((res) => res.json())
+    console.log(token)
 
-  //   console.log(data)
-  // }
+    const data = await fetch('/api/firebase', {
+      headers: { Authorization: token },
+    }).then((res) => res.json())
+
+    console.log(data)
+  }
 
   const fetchUser = async () => {
     const data = await httpService.get(`/api/user/${user.uid}`)
@@ -78,6 +80,13 @@ export default function Home() {
             onClick={signOut}
           >
             Sign OUT
+          </button>
+          <button
+            className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            type="button"
+            onClick={callApi}
+          >
+            Fetch Token
           </button>
           <button
             className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"

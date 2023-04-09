@@ -1,7 +1,10 @@
-import axios from 'axios';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import * as api from '../services/apiService';
+import { initFirebase } from '@/firebase/firebaseApp'
+import httpService from '@/services/httpService'
+import { getAuth } from 'firebase/auth'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import * as api from '../services/apiService'
 
 interface Movie {
   id: string
@@ -12,6 +15,12 @@ interface Movie {
 }
 
 function Movies(): JSX.Element {
+  // firebase configuration
+  initFirebase()
+  const auth = getAuth()
+
+  // firebase hooks
+  const [user, loading] = useAuthState(auth)
   const [movies, setMovies] = useState<Movie[]>([])
 
   const getMovies = async () => {
@@ -28,20 +37,37 @@ function Movies(): JSX.Element {
     getMovies()
   }, [])
 
-  const addMovie = async (movie: Movie) => {
-    try {
-      const response = await axios.post('/api/addMovie', movie, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      console.log(response.data)
+  const fetchUser = async () => httpService.get(`/api/user/${user.uid}`)
 
-    } catch (error) {
-      console.error(error)
+  const updateUser = async (payload) =>
+    httpService.put(`/api/user/${user.uid}`, payload)
+
+  const addMovie = async (movie) => {
+    const { data } = await fetchUser()
+
+    const userFavorites = data.user.favorites ? data.user.favorites : {}
+
+    // if movie is already in favorites
+    if (userFavorites[movie.id]) {
+      return
     }
+
+    const favorites = {
+      ...userFavorites,
+      [movie.id]: movie,
+    }
+
+    const payload = { favorites }
+
+    const res = await updateUser(payload)
+
+    console.log(res)
   }
 
+  // if user state is loading
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <ul className="px-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-7 xl:gap-x-8">
@@ -53,15 +79,17 @@ function Movies(): JSX.Element {
                 src={movie.image}
                 alt=""
                 className="pointer-events-none object-cover group-hover:opacity-75"
-                />
-            <Link href={`/${movie.id}`}>
-              <button
-                type="button"
-                className="absolute inset-0 focus:outline-none"
+              />
+              <Link href={`/${movie.id}`}>
+                <button
+                  type="button"
+                  className="absolute inset-0 focus:outline-none"
                 >
-                <span className="sr-only">View details for {movie.title}</span>
-              </button>
-            </Link>
+                  <span className="sr-only">
+                    View details for {movie.title}
+                  </span>
+                </button>
+              </Link>
             </div>
             <p className="text-center pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
               {movie.title}
