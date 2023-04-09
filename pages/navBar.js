@@ -1,9 +1,9 @@
-import Link from 'next/link'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
-import { Fragment, useState } from 'react'
-
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { XIcon } from '@heroicons/react/outline';
+import { Fragment } from 'react';
 
 const navigation = [
   { name: 'Movies', href: '/', current: true },
@@ -33,10 +33,19 @@ function Bars3Icon() {
   )
 }
 
-export default function NavBar({onButtonClick}){
-
-  const [nav, setNav] = useState(navigation)
-
+export default function NavBar(){
+  const router = useRouter()
+  const {pathname} = router
+  
+  
+  const newNavigation = navigation.map(el => {
+    if (el.href === pathname) {
+      return {...el, current: true};
+    }
+    return {...el, current: false};
+  });
+    
+  
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-5">
       {({ open }) => (
@@ -68,12 +77,8 @@ export default function NavBar({onButtonClick}){
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {nav.map((item) => (
-                      <Link onClick={() => {
-                        const newNav = onButtonClick(nav, item.name)
-                        setNav(newNav)
-                      }
-                    }
+                    {newNavigation.map((item) => (
+                      <Link 
                         key={item.name}
                         href={item.href}
                         className={classNames(

@@ -28,6 +28,7 @@ function Movies(): JSX.Element {
     getMovies()
   }, [])
 
+
   const addMovie = async (movie: Movie) => {
     try {
       const response = await axios.post('/api/addMovie', movie, {
@@ -44,8 +45,9 @@ function Movies(): JSX.Element {
 
 
   return (
-    <ul className="px-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-7 xl:gap-x-8">
-      {movies.map((movie) => (
+   <ul className="px-3 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-7 xl:gap-x-8">
+
+      {movies.length > 0 && movies.map((movie) => (
         <div key={movie.id}>
           <li className="relative">
             <div className="group aspect-h-7 aspect-w-10 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
