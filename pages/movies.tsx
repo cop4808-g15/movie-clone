@@ -28,7 +28,6 @@ function Movies(): JSX.Element {
     getMovies()
   }, [])
 
-
   const addMovie = async (movie: Movie) => {
     try {
       const response = await axios.post('/api/addMovie', movie, {

@@ -9,3 +9,6 @@ import httpService from './httpService'
 export const getMovies = () => {
   return httpService.get('/api/getMovies')
 }
+
+export const updateUser = async (uid: string, payload) =>
+  httpService.put(`/api/user/${uid}`, payload)

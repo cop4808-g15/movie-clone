@@ -1,4 +1,5 @@
 import { initFirebase } from '@/firebase/firebaseApp'
+import httpService from '@/services/httpService'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import Movies from './movies'
@@ -15,6 +16,16 @@ export default function Home() {
   // sign in with firebase
   const signIn = async () => {
     const result = await signInWithPopup(auth, provider)
+
+    const body = {
+      uid: result.user.uid,
+      displayName: result.user.displayName,
+    }
+
+    const data = await httpService.post('/api/user', body)
+
+    console.log(data)
+
     console.log(result.user)
   }
 
@@ -25,9 +36,29 @@ export default function Home() {
   const callApi = async () => {
     const token = await user.getIdToken()
 
+    console.log(token)
+
     const data = await fetch('/api/firebase', {
       headers: { Authorization: token },
     }).then((res) => res.json())
+
+    console.log(data)
+  }
+
+  const fetchUser = async () => {
+    const data = await httpService.get(`/api/user/${user.uid}`)
+
+    console.log(data)
+  }
+
+  const updateUser = async () => {
+    const favorites = ['movie1', 'movie2']
+
+    const payload = {
+      favorites,
+    }
+
+    const data = await httpService.put(`/api/user/${user.uid}`, payload)
 
     console.log(data)
   }
@@ -49,6 +80,27 @@ export default function Home() {
             onClick={signOut}
           >
             Sign OUT
+          </button>
+          <button
+            className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            type="button"
+            onClick={callApi}
+          >
+            Fetch Token
+          </button>
+          <button
+            className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            type="button"
+            onClick={fetchUser}
+          >
+            Fetch Current User
+          </button>
+          <button
+            className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            type="button"
+            onClick={updateUser}
+          >
+            Update current user
           </button>
           {/* <button
             className="bg-[rgb(31,41,55)] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
